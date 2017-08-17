@@ -6,7 +6,7 @@ from passlib.context import CryptContext
 #
 # create a single global instance for your app...
 #
-pwd_context = CryptContext(
+crypto = CryptContext(
     # Replace this list with the hash(es) you wish to support.
     # this example sets pbkdf2_sha256 as the default,
     # with additional support for reading legacy des_crypt hashes.

@@ -11,9 +11,6 @@ class Database:
         self.conn.commit()
         self.conn.close()
 
-    def basicInsert(self,text):
-        print(text)
-
     def makeNew(self):
         # Create USERS table
         self.conn.execute('''CREATE TABLE USERS
@@ -152,21 +149,6 @@ class Database:
         self.conn.execute("INSERT INTO USERS (EMAIL, PASSWORD, AGE, SEX, HEIGHT, WEIGHT, ACTIVITY, NAME) VALUES ('a', 'aaaa', 1, 'F', 1, 1, 1, 'a')")
         self.conn.execute("INSERT INTO USERS (EMAIL, PASSWORD, AGE, SEX, HEIGHT, WEIGHT, ACTIVITY, NAME) VALUES ('b', 'bbbb', 2, 'M', 2, 2, 2, 'b')")
         self.commit()
-
-    def setUserPassword(em, pwd):
-        self.conn = sqlite3.connect('pyfitnesspal.db')
-        self.conn.execute("INSERT INTO USERS (ID,EMAIL,PASSWORD, AGE, HEIGHT, WEIGHT, ACTIVITY, NAME) \
-              VALUES (1, ?, ?, 0, 0, 0, 0, 's')", (em, pwd));
-        self.conn.commit()
-        self.conn.close()
-
-    def getUserPassword():
-        self.conn = sqlite3.connect('pyfitnesspal.db')
-        cursor = self.conn.execute("SELECT PASSWORD FROM USERS")
-        for row in cursor:
-            return row[0]
-        self.conn.commit()
-        self.conn.close()
 
 
 
