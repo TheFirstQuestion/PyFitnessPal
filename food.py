@@ -1,5 +1,6 @@
 import json
 import requests
+import database
 
 def search():
     # Get food name from user
@@ -20,7 +21,7 @@ def search():
     return foodNo
 
 
-def display(foodNo):
+def record(foodNo):
     # Create API request using that number
     link = "https://api.nal.usda.gov/ndb/V2/reports?ndbno=" + foodNo + "&type=b&format=json&api_key=vR7HEUo0B9sbz8kh40G3xJ5Ch4Ft9Xx7JQ4CCfSU"
     # Gets JSON from URL
@@ -42,16 +43,18 @@ def display(foodNo):
     choice = int(input("What type of " + desc + " did you eat?  "))
     # Get amount eaten, to be used to multiply nutrients
     amount = float(input("How many " + my_dict["foods"][0]["food"]["nutrients"][0]["measures"][choice]["label"] + " did you eat?  "))
-    # Print nutrient name and amount
-    for i in range(0, 32):
-        print()
-        print(my_dict["foods"][0]["food"]["nutrients"][i]["name"])
-        value = my_dict["foods"][0]["food"]["nutrients"][i]["measures"][choice]["value"]
-        total = float(value) * float(amount)
-        print(total)
+    # Get date of eating
+    day = input("What day did you eat it? (YYYY-MM-DD): ")
+    #### Should verify date
+    db = database.Database()
+    db.conn.execute("INSERT INTO EATING (USER, FOOD, MEASURE, SERVINGS, DAY) \
+      VALUES (1, ?, ?, ?, ?)", (foodNo, choice, amount, day))
+    db.close()
+
+    print("record entered")
 
 
 
 
 if __name__ == "__main__":
-    display(search())
+    record(search())

@@ -17,7 +17,7 @@ class Database:
                 (ID             INTEGER        PRIMARY KEY      NOT NULL,
                 EMAIL           VARCHAR                     ,
                 PASSWORD        TEXT                        ,
-                AGE             INT                         ,
+                DOB             TEXT                         ,
                 SEX             CHAR(1)                     ,
                 HEIGHT          INT                         ,
                 WEIGHT          INT                         ,
@@ -146,8 +146,8 @@ class Database:
         self.commit()
 
     def makeTestUsers(self):
-        self.conn.execute("INSERT INTO USERS (EMAIL, PASSWORD, AGE, SEX, HEIGHT, WEIGHT, ACTIVITY, NAME) VALUES ('a', 'aaaa', 1, 'F', 1, 1, 1, 'a')")
-        self.conn.execute("INSERT INTO USERS (EMAIL, PASSWORD, AGE, SEX, HEIGHT, WEIGHT, ACTIVITY, NAME) VALUES ('b', 'bbbb', 2, 'M', 2, 2, 2, 'b')")
+        self.conn.execute("INSERT INTO USERS (EMAIL, PASSWORD, DOB, SEX, HEIGHT, WEIGHT, ACTIVITY, NAME) VALUES ('a', 'aaaa', '2000-4-28', 'F', 1, 1, 1, 'a')")
+        self.conn.execute("INSERT INTO USERS (EMAIL, PASSWORD, DOB, SEX, HEIGHT, WEIGHT, ACTIVITY, NAME) VALUES ('b', 'bbbb', '1990-12-6', 'M', 2, 2, 2, 'b')")
         self.commit()
 
 
