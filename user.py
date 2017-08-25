@@ -3,30 +3,25 @@ from crypto import crypto
 from random import randint
 
 class User:
-    def __init__(self):
+    def __init__(self, email, passw, dob, sex, h, w, act, name):
         self.db = database.Database()
-        self.db.makeNew()
-        self.db.makeTestUsers()
+        #self.db.makeNew()
+        #self.db.makeTestUsers()
 
 
         # Add basic information
         self.setIden()
-        self.email = input("enter your email: ")
-        self.password = input("enter your password (must be 8 characters or longer): ")
-        self.dob = input("enter your date of birth (YYYY-MM-DD): ")
-        self.sex = input("enter your sex (F, M, or X): ")
-        self.height = input("enter your height (ft, in): ")
-        self.weight = input("enter your weight (lbs): ")
-        self.activity = input("""enter your activity level
-        1: little
-        2: more
-        3: even more
-        4: lots
-        enter here:  """)
-        self.name = input("enter your name: ")
+        self.email = email
+        self.password = passw
+        self.dob = dob
+        self.sex = sex
+        self.height = h
+        self.weight = w
+        self.activity = act
+        self.name = name
 
         # Make sure all fields are filled
-        while self.email == "xXx":
+        """while self.email == "xXx":
             self.email = input("re-enter your email: ")
         while self.password == "xXx":
             self.password = input("re-enter your password: ")
@@ -38,18 +33,18 @@ class User:
             self.height = input("re-enter your height (ft, in): ")
         while self.weight == "xXx":
             self.weight = input("re-enter your weight (lbs): ")
-        while self.activity == "xXx":
-            self.activity = input("""re-enter your activity level
-            1: little
-            2: more
-            3: even more
-            4: lots
-            enter here:  """)
-        while self.name == "xXx":
+        while self.activity == "xXx":"""
+            #self.activity = input("""re-enter your activity level
+            #1: little
+            #2: more
+            #3: even more
+            #4: lots
+            #enter here:  """)
+        """while self.name == "xXx":
             self.name = input("re-enter your name: ")
 
         print("user created")
-        #self.verifyPassword()
+        #self.verifyPassword()"""
         self.db.close()
 
     def verifyPassword(self):
@@ -266,4 +261,18 @@ class User:
 
 
 if __name__ == "__main__":
+    self.email = input("enter your email: ")
+    self.password = input("enter your password (must be 8 characters or longer): ")
+    self.dob = input("enter your date of birth (YYYY-MM-DD): ")
+    self.sex = input("enter your sex (F, M, or X): ")
+    self.height = input("enter your height (ft, in): ")
+    self.weight = input("enter your weight (lbs): ")
+    self.activity = input("""enter your activity level
+    1: little
+    2: more
+    3: even more
+    4: lots
+    enter here:  """)
+    self.name = input("enter your name: ")
+
     user = User()
