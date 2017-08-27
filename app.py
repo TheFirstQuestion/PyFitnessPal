@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-    return render_template('index.html')
+    return render_template('header.html')
 
 @app.route('/showSignUp')
 def showSignUp():
@@ -20,10 +20,14 @@ def signUp():
 
     # validate the received values
     if _name and _email and _password:
-        u = user.User("x@eoioei.com", "jdjdjdjdjd", "01-01-2001", "F", "5, 11", "100", "2", "oiwjeoir")
+        u = user.User(_email, _password, "01-01-2001", "F", "5, 11", "100", "2", _name)
         return json.dumps({'html':'noice'})
     else:
         return json.dumps({'html':'whoops'})
+
+@app.route('/showSignin')
+def showSignin():
+    return render_template('signin.html')
 
 if __name__ == "__main__":
     app.run()
