@@ -1,0 +1,11 @@
+/******************************************** Header *******************************************************/
+#bootstrap-overrides .active {
+    background-color: #eee;
+}
+
+#bootstrap-overrides .text-muted a:hover {
+    text-decoration: none !important;
+}
+
+
+/******************************************** Footer *******************************************************/
