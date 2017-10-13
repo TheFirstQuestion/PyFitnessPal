@@ -1,11 +1,66 @@
 {% include "header.html" %}
 
+{% set user = dict(session.get('newUser')) %}
+
 <div class="jumbotron">
-    <h1>Hello New User</h1>
-    <p class="lead"></p>
-    
+    <h1>Hello, {{ user['_DatabaseUser__name'] }}!</h1>
+    <p class="lead">Let's update your personal info.</p>
+
+    <form class="form-signin">
+        <label for="inputDob">Date of Birth:</label>
+        <input type="dob" name="inputDob" id="inputDob" class="form-control" placeholder="01-01-1999" required autofocus>
+
+        <label for="inputSex">Biological Sex:</label>
+        <select class="form-control" id="inputSex">
+            <option selected="selected">F</option>
+            <option>M</option>
+            <option>I</option>
+        </select>
+
+        <label for="inputHeight">Height (ft, in):</label>
+        <input type="height" name="inputHeight" id="inputHeight" class="form-control" placeholder="5, 6" required>
+
+        <label for="inputWeight">Weight (lbs):</label>
+        <input type="weight" name="inputWeight" id="inputWeight" class="form-control" placeholder="130" required>
+
+        <label for="inputAct">Activity Level:</label>
+        <select class="form-control" id="inputAct">
+            <option selected="selected">1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+        </select>
+
+
+        <button id="btnFinishReg" class="btn btn-lg btn-primary btn-block" type="button">Update</button>
+    </form>
+
     </p>
 </div>
+
+
+<!-- Send data to signUp method -->
+<script>
+    $(function() {
+        $('#btnFinishReg').click(function() {
+            console.log($('form').serialize());
+            // SELECT won't serialize
+            // Height has comma space
+
+            $.ajax({
+                url: '/finishReg',
+                data: $('form').serialize(),
+                type: 'POST',
+                success: function(response) {
+                    window.location = response;
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
 
 
 {% include "footer.html" %}

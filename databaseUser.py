@@ -3,9 +3,9 @@ from crypto import crypto
 from random import randint
 
 class DatabaseUser:
-    def __init__(self, email, passw, dob, sex, h, w, act, name):
-        self.db = database.Database()
+    db = database.Database()
 
+    def __init__(self, email, passw, dob, sex, h, w, act, name):
         # Add basic information
         self.setIden()
         self.email = email
@@ -18,7 +18,7 @@ class DatabaseUser:
         self.name = name
 
 
-        self.db.close()
+        DatabaseUser.db.close()
 
 
     # Setters
@@ -30,7 +30,7 @@ class DatabaseUser:
 
             try:
                 # Try to insert it
-                self.db.conn.execute("INSERT INTO USERS (ID) VALUES (?)", (self.__iden,))
+                DatabaseUser.db.conn.execute("INSERT INTO USERS (ID) VALUES (?)", (self.__iden,))
             except database.sqlite3.Error as er:
                 # If there's an error, set marker
                 print('error')
@@ -48,11 +48,11 @@ class DatabaseUser:
             return
         try:
             # Try to insert it
-            self.db.conn.execute("UPDATE USERS set EMAIL = ? WHERE ID = ?", (email, self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set EMAIL = ? WHERE ID = ?", (email, self.iden))
             self.__email = email
         except database.sqlite3.Error as er:
             # If there's an error, set marker
-            self.db.conn.execute("UPDATE USERS set EMAIL = ? WHERE ID = ?", ("xXx", self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set EMAIL = ? WHERE ID = ?", ("xXx", self.iden))
             self.__email = "xXx"
             return
 
@@ -66,11 +66,11 @@ class DatabaseUser:
         hashed = crypto.hash(pwd)
         try:
             # Try to insert it
-            self.db.conn.execute("UPDATE USERS set PASSWORD = ? WHERE ID = ?", (hashed, self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set PASSWORD = ? WHERE ID = ?", (hashed, self.iden))
             self.__password = hashed
         except database.sqlite3.Error as er:
             # If there's an error, set marker
-            self.db.conn.execute("UPDATE USERS set PASSWORD = ? WHERE ID = ?", ("xXx", self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set PASSWORD = ? WHERE ID = ?", ("xXx", self.iden))
             self.__password = "xXx"
             return
 
@@ -83,11 +83,11 @@ class DatabaseUser:
         ####### Probably should do some sort of age check here
         try:
             # Try to insert it
-            self.db.conn.execute("UPDATE USERS set DOB = ? WHERE ID = ?", (dob, self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set DOB = ? WHERE ID = ?", (dob, self.iden))
             self.__dob = dob
         except database.sqlite3.Error as er:
             # If there's an error, set marker
-            self.db.conn.execute("UPDATE USERS set DOB = ? WHERE ID = ?", ("xXx", self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set DOB = ? WHERE ID = ?", ("xXx", self.iden))
             self.__dob = "xXx"
             return
 
@@ -98,10 +98,10 @@ class DatabaseUser:
         if sex == "F" or sex == "M" or sex == "X":
             try:
                 # Try to insert it
-                self.db.conn.execute("UPDATE USERS set SEX = ? WHERE ID = ?", (sex, self.iden))
+                DatabaseUser.db.conn.execute("UPDATE USERS set SEX = ? WHERE ID = ?", (sex, self.iden))
             except database.sqlite3.Error as er:
                 # If there's an error, set marker
-                self.db.conn.execute("UPDATE USERS set SEX = ? WHERE ID = ?", ("xXx", self.iden))
+                DatabaseUser.db.conn.execute("UPDATE USERS set SEX = ? WHERE ID = ?", ("xXx", self.iden))
                 self.__sex = "xXx"
                 return
             self.__sex = sex
@@ -122,11 +122,11 @@ class DatabaseUser:
         heightIn = (int(h[0]) * 12) + int(h[1])
         try:
             # Try to insert it
-            self.db.conn.execute("UPDATE USERS set HEIGHT = ? WHERE ID = ?", (heightIn, self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set HEIGHT = ? WHERE ID = ?", (heightIn, self.iden))
             self.__height = heightIn
         except database.sqlite3.Error as er:
             # If there's an error, set marker
-            self.db.conn.execute("UPDATE USERS set HEIGHT = ? WHERE ID = ?", ("xXx", self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set HEIGHT = ? WHERE ID = ?", ("xXx", self.iden))
             self.__height = "xXx"
             return
 
@@ -143,11 +143,11 @@ class DatabaseUser:
             return
         try:
             # Try to insert it
-            self.db.conn.execute("UPDATE USERS set WEIGHT = ? WHERE ID = ?", (w, self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set WEIGHT = ? WHERE ID = ?", (w, self.iden))
             self.__weight = w
         except database.sqlite3.Error as er:
             # If there's an error, set marker
-            self.db.conn.execute("UPDATE USERS set WEIGHT = ? WHERE ID = ?", ("xXx", self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set WEIGHT = ? WHERE ID = ?", ("xXx", self.iden))
             self.__weight = "xXx"
             return
 
@@ -166,22 +166,22 @@ class DatabaseUser:
             return
         try:
             # Try to insert it
-            self.db.conn.execute("UPDATE USERS set ACTIVITY = ? WHERE ID = ?", (act, self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set ACTIVITY = ? WHERE ID = ?", (act, self.iden))
             self.__activity = act
         except database.sqlite3.Error as er:
             # If there's an error, set marker
-            self.db.conn.execute("UPDATE USERS set ACTIVITY = ? WHERE ID = ?", ("xXx", self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set ACTIVITY = ? WHERE ID = ?", ("xXx", self.iden))
             self.__activity = "xXx"
             return
 
     def setName(self, name):
         try:
             # Try to insert it
-            self.db.conn.execute("UPDATE USERS set NAME = ? WHERE ID = ?", (name, self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set NAME = ? WHERE ID = ?", (name, self.iden))
             self.__name = name
         except database.sqlite3.Error as er:
             # If there's an error, set marker
-            self.db.conn.execute("UPDATE USERS set NAME = ? WHERE ID = ?", ("xXx", self.iden))
+            DatabaseUser.db.conn.execute("UPDATE USERS set NAME = ? WHERE ID = ?", ("xXx", self.iden))
             self.__name = "xXx"
             return
 

@@ -5,8 +5,16 @@
 <div class="jumbotron">
     <h1>Welcome, {{ user['_User__name'] }}!</h1>
     <p class="lead"></p>
-    <p><a class="btn btn-lg btn-success" href="showSignUp" role="button">Sign up today</a>
-    </p>
+
+    <ul>
+        <li>{{ user['_User__dob'] }}</li>
+        <li>{{ user['_User__sex'] }}</li>
+        <li>{{ user['_User__activity'] }}</li>
+        <li>{{ user['_User__height'] }}</li>
+        <li>{{ user['_User__weight'] }}</li>
+        <li>{{ user['_User__email'] }}</li>
+    </ul>
+
 </div>
 
 

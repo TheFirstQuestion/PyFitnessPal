@@ -4,6 +4,7 @@ from random import randint
 
 class User:
     db = database.Database()
+    
     def __init__(self, iden):
 
         # Get this user from the database
