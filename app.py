@@ -20,7 +20,7 @@ def showSignUp():
     return flask.render_template('signup.html')
 
 @app.route('/showSignIn', methods=['GET', 'POST'])
-def showSignin():
+def showSignIn():
     return flask.render_template('signin.html')
 
 @app.route('/showNewUser')
@@ -51,13 +51,17 @@ def signUp():
         newUser = databaseUser.DatabaseUser(_email, _password, "00-00-1800", "Z", "0, 0", 000, 0, _name)
         # Store in session
         flask.session['newUser'] = newUser.__dict__
+
         # Delete user from database (we'll make a new one with correct fields later)
         db = database.Database()
-        db.conn.execute("DELETE FROM USERS WHERE EMAIL IS (?) AND PASSWORD IS (?)", (_email, _password))
+        db.conn.execute("DELETE FROM USERS WHERE EMAIL IS (?)", (_email,))
+        db.commit()
+
         # Send URL for setup page
         return flask.url_for('showNewUser')
     else:
         return flask.url_for('showSignUp')
+
 
 
 @app.route('/signIn', methods=['POST', 'GET'])
@@ -79,9 +83,12 @@ def signIn():
                 # Send URL for home
                 return flask.url_for('home')
             else:
+                print("incorrent password")
                 return flask.url_for('showSignIn')
     else:
+        print("values not good")
         return flask.url_for('showSignIn')
+
 
 
 @app.route('/finishReg', methods=['POST', 'GET'])
@@ -97,20 +104,23 @@ def finishReg():
     if _dob and _sex and _height and _weight and _activity:
         # Create user
         db = database.Database()
-        newUser = session.get('newUser')
-        makeNewUser = databaseUser.DatabaseUser(newUser['_DatabaseUser__email'], newUser['_DatabaseUser__password'], _dob, _sex, _height, _weight, _activity, newUser['_DatabaseUser__name'])
+        newUser = flask.session.get('newUser')
+        passwordHashed = newUser['_DatabaseUser__password']
+        makeNewUser = databaseUser.DatabaseUser(newUser['_DatabaseUser__email'], "xXxXxXxXxXxXx", _dob, _sex, _height, _weight, _activity, newUser['_DatabaseUser__name'])
+
+        # Set password, without rehashing it
+        db.conn.execute("UPDATE USERS set PASSWORD = ? WHERE EMAIL IS ?", (passwordHashed, newUser['_DatabaseUser__email']))
+        db.conn.commit()
+
         possibleUser = db.conn.execute("SELECT * FROM USERS WHERE EMAIL IS (?)", (newUser['_DatabaseUser__email'],))
-        print("testing")
         for x in possibleUser:
             # Create user
             currentUser = user.User(x[0])
             flask.session['currentUser'] = currentUser.__dict__
-            print("user in session")
             # Send URL for home
             return flask.url_for('home')
     else:
-        print("no bueno")
-        return flask.url_for('finishReg')
+        return flask.url_for('showNewUser')
 
 
 

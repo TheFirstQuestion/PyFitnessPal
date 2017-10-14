@@ -18,7 +18,7 @@ class DatabaseUser:
         self.name = name
 
 
-        DatabaseUser.db.close()
+        DatabaseUser.db.commit()
 
 
     # Setters
@@ -33,7 +33,8 @@ class DatabaseUser:
                 DatabaseUser.db.conn.execute("INSERT INTO USERS (ID) VALUES (?)", (self.__iden,))
             except database.sqlite3.Error as er:
                 # If there's an error, set marker
-                print('error')
+                print(er)
+                print(self.__iden)
             else:
                 # If it's unique, end the loop
                 break

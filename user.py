@@ -4,7 +4,7 @@ from random import randint
 
 class User:
     db = database.Database()
-    
+
     def __init__(self, iden):
 
         # Get this user from the database
@@ -21,7 +21,7 @@ class User:
             self.activity = user[7]
             self.name = user[8]
 
-        User.db.close()
+        User.db.commit()
 
 
     # Static method to verify passwords
