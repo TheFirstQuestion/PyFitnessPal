@@ -1,0 +1,16 @@
+/******************************************** Header *******************************************************/
+#bootstrap-overrides .active {
+    background-color: #eee;
+}
+
+#bootstrap-overrides .text-muted a:hover {
+    text-decoration: none !important;
+}
+
+
+/******************************************** Footer *******************************************************/
+#bootstrap-overrides footer {
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+}

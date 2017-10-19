@@ -1,4 +1,4 @@
-{% include "header.html" %}
+{% include "header-loggedout.html" %}
 
 {% set user = dict(session.get('newUser')) %}
 
@@ -44,8 +44,6 @@
     $(function() {
         $('#btnFinishReg').click(function() {
             console.log($('form').serialize());
-            // SELECT won't serialize
-            // Height has comma space
 
             $.ajax({
                 url: '/finishReg',

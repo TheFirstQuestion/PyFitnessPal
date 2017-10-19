@@ -1,20 +1,20 @@
-{% include "header.html" %}
+{% include "header-loggedout.html" %}
 <link href="../static/css/index-style.css" rel="stylesheet">
 
 <div class="jumbotron">
-    <h1>Bucket List App</h1>
+    <h1>PyFitnessPal</h1>
 
-<div class="container" id="main">
-        <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
-        <script>
-            // Get README from GitHub
-            $.get("https://raw.githubusercontent.com/TheFirstQuestion/PyFitnessPal/master/README.md", function(data) {
-                // If you're in the browser, the Remarkable class is already available in the window
-                var md = new Remarkable();
-                $("#main").html(md.render(data));
-            });
-        </script>
-</div>
+    <div class="container" id="main">
+            <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+            <script>
+                // Get README from GitHub
+                $.get("https://raw.githubusercontent.com/TheFirstQuestion/PyFitnessPal/master/README.md", function(data) {
+                    // If you're in the browser, the Remarkable class is already available in the window
+                    var md = new Remarkable();
+                    $("#main").html(md.render(data));
+                });
+            </script>
+    </div>
 </div>
 
 {% include "footer.html" %}
