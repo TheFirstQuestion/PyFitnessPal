@@ -4,30 +4,58 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-
 <div class="jumbotron">
     <h1>Add Food</h1>
 
     <div class="ui-widget">
-        <label for="tags">Tags: </label>
-        <input id="tags">
+        <form class="form-signin" method="post" onSubmit="submitForm()">
+            <label for="food">Food: </label>
+            <input id="food" name="food" placeholder="Pop Tart" required autofocus>
+            <input class="btn btn-primary" type="submit">
+        </form>
     </div>
+
+
+    <!-- Display the food eaten today -->
 
 </div>
 
 
 <script>
-
     $(function() {
-        var availableTags = {{ foods|tojson|safe }};
+        // Get the foods in the database to autofill the search bar
+        var availableFoods = {{ foods|tojson|safe }};
 
-        $("#tags").autocomplete({
-            source: availableTags,
+        // Names only, to allow autofill
+        var foodNames = [];
+        for (var i = 0; i < availableFoods.length; i++) {
+            foodNames[i] = availableFoods[i][2];
+        }
+
+        // Don't overload the server tho
+        $("#food").autocomplete({
+            source: foodNames,
             minLength: 3,
-            delay: 500
+            delay: 500,
+            limit: 15
         });
     });
 
+    // Give the form to the backend
+    function submitForm() {
+        $.ajax({
+            url: '/addFood',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+                window.location = response;
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
 </script>
+
 
 {% include "footer.html" %}

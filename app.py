@@ -42,7 +42,7 @@ def home():
 def nutrition():
     return flask.render_template('nutrition.html')
 
-@app.route('/add')
+@app.route('/add', methods=['POST', 'GET'])
 def add():
     USDA = USDADatabase.USDADatabase()
     # Get foods from the DB
@@ -139,6 +139,16 @@ def finishReg():
     else:
         return flask.url_for('showNewUser')
 
+
+
+
+@app.route('/addFood', methods=['POST', 'GET'])
+def addFood():
+    _food = flask.request.form['food']
+    # Add the food as eaten...
+
+    
+    return flask.url_for('add')
 
 
 
