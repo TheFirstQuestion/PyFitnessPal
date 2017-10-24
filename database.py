@@ -27,7 +27,7 @@ class Database:
 
         # Create EATING table
         self.conn.execute('''CREATE TABLE EATING
-               (ID             INTEGER         PRIMARY KEY      NOT NULL,
+               (ID             INTEGER         AUTOINCREMENT     PRIMARY KEY      NOT NULL,
                 USER           INT                          ,
                 FOOD           INT                          ,
                 MEASURE        INT                          ,

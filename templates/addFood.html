@@ -10,7 +10,16 @@
     <div class="ui-widget">
         <form class="form-signin" method="post" onSubmit="submitForm()">
             <label for="food">Food: </label>
-            <input id="food" name="food" placeholder="Pop Tart" required autofocus>
+            <input id="food" name="food" class="selector" placeholder="Pop Tart" required autofocus>
+
+            <label for="measure">Measure:</label>
+            <select class="form-control" name="measure" id="measure">
+                <!-- Dynamically populated from DB when a food is selected -->
+            </select>
+
+            <label for="servings">Servings: </label>
+            <input id="servings" name="servings" value="1" required>
+
             <input class="btn btn-primary" type="submit">
         </form>
     </div>
@@ -36,9 +45,42 @@
         $("#food").autocomplete({
             source: foodNames,
             minLength: 3,
-            delay: 500,
-            limit: 15
+            delay: 500
         });
+    });
+
+    // Event listener for an option being selected from the autocomplete
+    $(".selector").on( "autocompleteselect", function(event, ui) {
+        var options = $("#measure");
+
+        var selectedFood = ui.item.value;
+        var availableFoods = {{ foods|tojson|safe }};
+
+        // Search for selected food in list
+        var foodFull = 0;
+        for (var i = 0; i < availableFoods.length; i++) {
+            if (selectedFood == availableFoods[i][2]) {
+                foodFull = availableFoods[i];
+                break;
+            }
+        }
+
+        // Get measures
+        var availableWeights = {{ weights|tojson|safe }};
+
+        var availableMeasures = [];
+        for (var i = 0; i < availableWeights.length; i++) {
+            if (foodFull[0] == availableWeights[i][0]) {
+                availableMeasures.push(availableWeights[i]);
+                break;
+            }
+        }
+
+        for (var i = 0; i < availableMeasures.length; i++) {
+            // Value in the select is the measure in grams
+            $("#measure").append('<option value="' + availableMeasures[i][4] + '">' + availableMeasures[i][2] + " " + availableMeasures[i][3] + '</option>');
+        }
+
     });
 
     // Give the form to the backend

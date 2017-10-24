@@ -4,7 +4,9 @@ import database
 import USDADatabase
 import databaseUser
 import json
+import datetime
 
+now = datetime.datetime.now()
 
 app = flask.Flask(__name__)
 # Needed for session storage
@@ -50,7 +52,10 @@ def add():
     cursor.execute("SELECT * FROM FOOD_DES")
     data = cursor.fetchall()
 
-    return flask.render_template('addFood.html', foods=data)
+    cursor.execute("SELECT * FROM WEIGHT")
+    data2 = cursor.fetchall()
+
+    return flask.render_template('addFood.html', foods=data, weights=data2)
 
 
 
@@ -145,9 +150,44 @@ def finishReg():
 @app.route('/addFood', methods=['POST', 'GET'])
 def addFood():
     _food = flask.request.form['food']
-    # Add the food as eaten...
+    _measure = flask.request.form['measure']
+    _servings = flask.request.form['servings']
 
-    
+    USDA = USDADatabase.USDADatabase()
+    # Get food from the DB
+    cursor = USDA.conn.cursor()
+    cursor.execute("SELECT * FROM FOOD_DES WHERE Long_Desc IS ?", (_food,))
+    foodFull = cursor.fetchall()
+
+    foodID = int(foodFull[0][0])
+
+    # Get measures from the DB
+    cursor.execute("SELECT * FROM WEIGHT")
+    measureFull = cursor.fetchall()
+
+    selectedMeasure = 0;
+
+    for i in range(0, len(measureFull)):
+        if measureFull[i][4] == _measure:
+            selectedMeasure = measureFull[i]
+            break
+
+    print(selectedMeasure)
+
+    # Add event to the DB
+    userID = int(flask.session.get('currentUser')["_User__iden"])
+    measure = int(float(selectedMeasure[4]))
+    servings = int(_servings)
+    day = now.strftime("%m-%d-%Y")
+
+    db = database.Database()
+    db.conn.execute("INSERT INTO EATING (USER, FOOD, MEASURE, SERVINGS, DAY) VALUES (?, ?, ?, ?, ?)", (userID, foodID, measure, servings, day))
+    db.commit()
+
+
+
+
+
     return flask.url_for('add')
 
 

@@ -4,7 +4,7 @@
 <div class="jumbotron">
     <h1>Sign In</h1>
 
-    <form class="form-signin" method="post">
+    <form class="form-signin" method="post" onSubmit="submitForm()">
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
@@ -17,21 +17,17 @@
 
 <!-- Send data to signIn method -->
 <script>
-    $(function() {
-        // This should be changed to onsubmit function
-        $('#btnSignIn').click(function() {
-
-            $.ajax({
-                url: '/signIn',
-                data: $('form').serialize(),
-                type: 'POST',
-                success: function(response) {
-                    window.location = response;
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
+    function submitForm() {
+        $.ajax({
+            url: '/signIn',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+                window.location = response;
+            },
+            error: function(error) {
+                console.log(error);
+            }
         });
     });
 </script>

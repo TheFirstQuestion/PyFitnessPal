@@ -4,7 +4,7 @@
 <div class="jumbotron">
     <h1>Sign Up</h1>
 
-    <form class="form-signin">
+    <form class="form-signin" method="post" onSubmit="submitForm()">
         <label for="inputName" class="sr-only">Name</label>
         <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name" required autofocus>
 
@@ -22,19 +22,17 @@
 
 <!-- Send data to signUp method -->
 <script>
-    $(function() {
-        $('#btnSignUp').click(function() {
-            $.ajax({
-                url: '/signUp',
-                data: $('form').serialize(),
-                type: 'POST',
-                success: function(response) {
-                    window.location = response;
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
+    function submitForm() {
+        $.ajax({
+            url: '/signUp',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+                window.location = response;
+            },
+            error: function(error) {
+                console.log(error);
+            }
         });
     });
 </script>
