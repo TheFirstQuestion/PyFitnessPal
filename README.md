@@ -11,3 +11,7 @@ PyFitnessPal also makes use of the U.S. Department of Agriculture food compositi
 * Install Flask
 
     `sudo pip3 install flask`
+
+* Install PassLib
+
+    `sudo pip3 install passlib`
