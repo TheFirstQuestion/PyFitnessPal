@@ -3,9 +3,19 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="{{ url_for('static', filename='css/addFood-style.css') }}" rel="stylesheet">
 
 <div class="jumbotron">
     <h1>Add Food</h1>
+
+    <!-- MAKE A GENERAL 'FOOD' PAGE, DISPLAY FOODS EATEN TODAY, ALLOW EDITING, ADD FOOD AT BOTTOM
+
+    <h4>date</h4> CHANGEABLE
+    <ul>
+        <li>food</li> EDITABLE, DROPDOWN FOR NUTRIENTS
+        <li>food</li>
+    </ul>
+-->
 
     <div class="ui-widget">
         <form class="form-signin" method="post" onSubmit="submitForm()">
@@ -15,6 +25,7 @@
             <label for="measure">Measure:</label>
             <select class="form-control" name="measure" id="measure">
                 <!-- Dynamically populated from DB when a food is selected -->
+                <option value="1 pastry">1 pastry</option>
             </select>
 
             <label for="servings">Servings: </label>
@@ -76,9 +87,15 @@
             }
         }
 
+        // Remove any options from previous choice (or placeholder)
+        numOptions = options.length;
+        for (var i = 0; i < numOptions; i++) {
+            options[0][i].remove()
+        }
+
         for (var i = 0; i < availableMeasures.length; i++) {
             // Value in the select is the measure in grams
-            $("#measure").append('<option value="' + availableMeasures[i][4] + '">' + availableMeasures[i][2] + " " + availableMeasures[i][3] + '</option>');
+            options.append('<option value="' + availableMeasures[i][4] + '">' + availableMeasures[i][2] + " " + availableMeasures[i][3] + '</option>');
         }
 
     });
@@ -96,7 +113,7 @@
                 console.log(error);
             }
         });
-    }
+    };
 </script>
 
 

@@ -4,7 +4,7 @@ PyFitnessPal is based off of MyFitnessPal, but has a focus on nutrition rather t
 
 PyFitnessPal is written using Python 3, MySQL, Flask, jQuery, and Bootstrap.
 
-PyFitnessPal also makes use of the U.S. Department of Agriculture food composition data through its [API](https://ndb.nal.usda.gov/ndb/doc/).
+PyFitnessPal also makes use of the U.S. Department of Agriculture food composition data.
 
 ### Installation
 

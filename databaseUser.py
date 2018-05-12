@@ -21,6 +21,7 @@ class DatabaseUser:
         DatabaseUser.db.commit()
 
 
+
     # Setters
     def setIden(self):
         while True:

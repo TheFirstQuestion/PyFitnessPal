@@ -6,7 +6,7 @@
     <h1>Hello, {{ user['_DatabaseUser__name'] }}!</h1>
     <p class="lead">Let's update your personal info.</p>
 
-    <form class="form-signin">
+    <form class="form-signin" onsubmit="submitForm()">
         <label for="inputDob">Date of Birth:</label>
         <input type="dob" name="inputDob" id="inputDob" class="form-control" placeholder="01-01-1999" required autofocus>
 
@@ -32,7 +32,7 @@
         </select>
 
 
-        <button id="btnFinishReg" class="btn btn-lg btn-primary btn-block" type="button">Update</button>
+        <button id="btnFinishReg" class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
     </form>
 
     </p>
@@ -41,8 +41,7 @@
 
 <!-- Send data to signUp method -->
 <script>
-    $(function() {
-        $('#btnFinishReg').click(function() {
+    function submitForm() {
             console.log($('form').serialize());
 
             $.ajax({
@@ -57,7 +56,6 @@
                 }
             });
         });
-    });
 </script>
 
 

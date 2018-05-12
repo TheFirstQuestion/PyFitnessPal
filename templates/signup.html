@@ -14,7 +14,7 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
 
-        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button">Sign up</button>
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
     </form>
 </div>
 
@@ -23,6 +23,7 @@
 <!-- Send data to signUp method -->
 <script>
     function submitForm() {
+        console.log("Function called");
         $.ajax({
             url: '/signUp',
             data: $('form').serialize(),
@@ -34,7 +35,7 @@
                 console.log(error);
             }
         });
-    });
+    };
 </script>
 
 {% include "footer.html" %}
